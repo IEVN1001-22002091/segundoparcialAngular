@@ -1,0 +1,83 @@
+<div class="max-w-2xl mx-auto p-6">
+
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">
+    Lista Alumnos
+  </h1>
+
+  <form [formGroup]="formulario" (ngSubmit)="muestraAlumnos()">
+
+    <!-- Matricula -->
+    <div class="mb-5">
+      <label for="matricula" class="block mb-2 text-sm font-medium text-gray-900">
+        Matricula
+      </label>
+      <input
+        type="text"
+        id="matricula"
+        formControlName="matricula"
+        class="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+        placeholder="Matricula"
+      >
+
+    </div>
+
+    <!-- Nombre -->
+    <div class="mb-5">
+      <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">
+        Nombre
+      </label>
+      <input
+        type="text"
+        id="nombre"
+        formControlName="nombre"
+        class="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+        placeholder="Nombre"
+      >
+    </div>
+
+    <!-- Correo -->
+    <div class="mb-5">
+      <label for="correo" class="block mb-2 text-sm font-medium text-gray-900">
+        Correo
+      </label>
+      <input
+        type="email"
+        id="correo"
+        formControlName="correo"
+        class="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+        placeholder="Correo"
+      >
+
+    </div>
+
+    <!-- Materia -->
+    <div class="mb-5">
+      <label for="materia" class="block mb-2 text-sm font-medium text-gray-900">
+        Materia
+      </label>
+      <input
+        type="text"
+        id="materia"
+        formControlName="materia"
+        class="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+        placeholder="Materia"
+      >
+    </div>
+
+    <!-- Botón Registrar -->
+    <div class="flex justify-center mt-6">
+  <button
+    type="submit"
+    class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-8 py-2.5"
+  >
+    Registrar
+  </button>
+</div>
+
+  </form>
+    <h3>Matricula: {{ alumno.matricula }}</h3>
+    <h3>Nombre: {{ alumno.nombre }}</h3>
+    <h3>Correo: {{ alumno.correo }}</h3>
+    <h3>Materia: {{ alumno.materia }}</h3>
+
+</div>
