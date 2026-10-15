@@ -1,143 +1,123 @@
-<br>
-<br>
-<div class="max-w-2xl mx-auto p-4 bg-white border border-gray-300 shadow-sm my-4 rounded-md">
+<div class="container mx-auto p-6 max-w-5xl mt-6">
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+  <!-- ================= BARRA SUPERIOR SEPARADA Y CORREGIDA ================= -->
+  <div class="bg-white border border-gray-200 p-4 rounded-lg shadow-sm flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 relative z-40">
+    <h2 class="text-xl font-bold text-gray-800">Módulo Zodíaco Chino</h2>
     
-    <div class="border-r-0 md:border-r border-gray-300 pr-0 md:pr-6">
+    <div>
+      <button 
+        *ngIf="vistaActual === 'calculo'"
+        type="button" 
+        (click)="cambiarVista('registros')"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-lg text-sm transition-all shadow-md cursor-pointer select-none pointer-events-auto"
+      >
+        Ver registros ({{ listaConsultas.length }})
+      </button>
+
+      <button 
+        *ngIf="vistaActual === 'registros'"
+        type="button" 
+        (click)="cambiarVista('calculo')"
+        class="bg-gray-800 hover:bg-gray-900 text-white font-bold px-5 py-2.5 rounded-lg text-sm transition-all shadow-md cursor-pointer select-none pointer-events-auto"
+      >
+        ← Volver al Formulario
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ================= VISTA 1: CALCULADORA (FORMULARIO Y RESULTADO VISUAL) ================= -->
+  <div *ngIf="vistaActual === 'calculo'">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white border border-gray-300 p-8 rounded-lg shadow-sm items-center">
       
-      <div class="border border-gray-400 p-3 rounded">
-        <h2 class="text-center text-sm font-semibold mb-3 text-gray-800">Datos Personales</h2>
-
-        <form [formGroup]="formZodiaco" (ngSubmit)="imprimir()">
+      <!-- Izquierda: Formulario -->
+      <div>
+        <h3 class="text-center font-bold text-gray-800 mb-4 border-b pb-2">Datos Personales</h3>
+        
+        <form [formGroup]="formZodiaco" (ngSubmit)="imprimirYGuardar()">
           
-          <div class="flex items-center mb-2">
-            <label class="w-20 text-xs font-medium text-gray-700">Nombre</label>
-            <input
-              type="text"
-              formControlName="nombre"
-              placeholder="Nombre"
-              class="flex-1 border border-gray-400 rounded px-2 py-1 text-xs focus:outline-none"
-            >
+          <div class="flex items-center mb-3">
+            <label class="w-24 text-sm font-medium text-gray-800">Nombre</label>
+            <input type="text" formControlName="nombre" placeholder="Nombre" class="flex-1 border border-gray-400 rounded px-3 py-1.5 text-sm">
           </div>
 
-          <div class="flex items-center mb-2">
-            <label class="w-20 text-xs font-medium text-gray-700">APaterno</label>
-            <input
-              type="text"
-              formControlName="apaterno"
-              placeholder="APaterno"
-              class="flex-1 border border-gray-400 rounded px-2 py-1 text-xs focus:outline-none"
-            >
+          <div class="flex items-center mb-3">
+            <label class="w-24 text-sm font-medium text-gray-800">APaterno</label>
+            <input type="text" formControlName="apaterno" placeholder="APaterno" class="flex-1 border border-gray-400 rounded px-3 py-1.5 text-sm">
           </div>
 
-          <!-- AMaterno -->
-          <div class="flex items-center mb-2">
-            <label class="w-20 text-xs font-medium text-gray-700">AMaterno</label>
-            <input
-              type="text"
-              formControlName="amaterno"
-              placeholder="AMaterno"
-              class="flex-1 border border-gray-400 rounded px-2 py-1 text-xs focus:outline-none"
-            >
+          <div class="flex items-center mb-4">
+            <label class="w-24 text-sm font-medium text-gray-800">AMaterno</label>
+            <input type="text" formControlName="amaterno" placeholder="AMaterno" class="flex-1 border border-gray-400 rounded px-3 py-1.5 text-sm">
           </div>
-
-          <!-- Fecha de nacimiento -->
-          <div class="mt-3 mb-2">
-            <p class="text-center text-xs font-medium mb-1">Fecha de nacimiento</p>
-            <div class="grid grid-cols-3 gap-2 text-center">
-              <div>
-                <span class="text-[10px] text-gray-600 block">Día</span>
-                <input
-                  type="number"
-                  formControlName="dia"
-                  class="w-full border border-gray-400 rounded px-1 py-1 text-xs text-center"
-                >
-              </div>
-              <div>
-                <span class="text-[10px] text-gray-600 block">Mes</span>
-                <input
-                  type="number"
-                  formControlName="mes"
-                  class="w-full border border-gray-400 rounded px-1 py-1 text-xs text-center"
-                >
-              </div>
-              <div>
-                <span class="text-[10px] text-gray-600 block">Año</span>
-                <input
-                  type="number"
-                  formControlName="anio"
-                  class="w-full border border-gray-400 rounded px-1 py-1 text-xs text-center"
-                >
-              </div>
+          
+          <div class="mb-4">
+            <p class="text-center text-sm font-medium text-gray-800 mb-2">Fecha de nacimiento</p>
+            <div class="grid grid-cols-3 gap-2 max-w-sm mx-auto text-center">
+              <input type="number" formControlName="dia" placeholder="Día" class="border border-gray-400 rounded p-1.5 text-sm text-center">
+              <input type="number" formControlName="mes" placeholder="Mes" class="border border-gray-400 rounded p-1.5 text-sm text-center">
+              <input type="number" formControlName="anio" placeholder="Año" class="border border-gray-400 rounded p-1.5 text-sm text-center">
             </div>
           </div>
 
-          <!-- Sexo -->
-          <div class="mt-3 mb-3">
-            <p class="text-xs font-medium mb-1">sexo</p>
-            <div class="flex flex-col gap-0.5 ml-2">
-              <label class="inline-flex items-center text-xs">
-                <input type="radio" formControlName="sexo" value="Masculino" class="mr-1.5 h-3 w-3">
-                Masculino
-              </label>
-              <label class="inline-flex items-center text-xs">
-                <input type="radio" formControlName="sexo" value="Femenino" class="mr-1.5 h-3 w-3">
-                Femenino
-              </label>
+          <div class="mb-6 max-w-sm mx-auto">
+            <p class="text-sm font-medium text-gray-800 mb-1">sexo</p>
+            <div class="flex gap-4 text-sm">
+              <label><input type="radio" formControlName="sexo" value="Masculino" class="mr-1"> Masculino</label>
+              <label><input type="radio" formControlName="sexo" value="Femenino" class="mr-1"> Femenino</label>
             </div>
           </div>
 
-          <!-- Botón Imprimir -->
-          <div class="mt-4">
-            <button
-              type="submit"
-              class="w-full border-2 border-black font-bold py-1 text-sm text-black hover:bg-gray-100 transition-colors"
-            >
-              imprimir
+          <div class="flex justify-center gap-3">
+            <button type="submit" class="border-2 border-black font-bold py-2 px-8 text-sm hover:bg-gray-100 rounded cursor-pointer">
+              {{ indiceEdicion !== -1 ? 'Actualizar' : 'imprimir' }}
+            </button>
+            <button type="button" (click)="limpiar()" class="border-2 border-gray-400 font-bold py-2 px-6 text-sm hover:bg-gray-100 rounded text-gray-700 cursor-pointer">
+              Limpiar
             </button>
           </div>
-
         </form>
       </div>
 
-    </div>
+      <!-- Derecha: Resultado Visual con Círculo Azul -->
+      <div class="border-t md:border-t-0 md:border-l border-gray-400 pt-6 md:pt-0 md:pl-8 flex flex-col items-center justify-center text-center">
+        <div *ngIf="resultadoActual; else sinResultado" class="space-y-4 w-full">
+          <h2 class="text-2xl font-normal text-gray-900">
+            Hola <span class="italic font-bold">{{ resultadoActual.nombreCompleto }}</span>
+          </h2>
+          
+          <p class="text-xl text-gray-800 font-medium">
+            Tienes <span class="font-bold">{{ resultadoActual.edad }}</span> años
+          </p>
 
-    <!-- COLUMNA DERECHA: Impresión de Resultados -->
-    <div class="flex flex-col items-center justify-center min-h-[220px]">
-      
-      <div *ngIf="resultado" class="text-center space-y-2">
-        
-        <h2 class="text-base font-normal text-gray-900">
-          Hola <span class="font-bold italic">{{ resultado.nombreCompleto }}</span>
-        </h2>
+          <p class="text-gray-700 font-medium text-base">tu signo zodiacal</p>
 
-        <p class="text-sm font-medium text-gray-800">
-          Tienes <span class="font-bold">{{ resultado.edad }}</span> años
-        </p>
+          <div class="flex flex-col items-center justify-center gap-3">
+            <div class="w-36 h-36 rounded-full bg-blue-600 flex items-center justify-center overflow-hidden shadow-md border-4 border-blue-300">
+              <img [src]="resultadoActual.imagen" [alt]="resultadoActual.signo" class="w-24 h-24 object-contain">
+            </div>
+            <span class="text-xl font-bold text-gray-900">Es {{ resultadoActual.signo }}</span>
+          </div>
+        </div>
 
-        <p class="text-sm text-gray-700">
-          tu signo zodiacal
-        </p>
-
-        <div class="flex items-center justify-center gap-3 mt-3">
-  <span class="text-base font-semibold text-gray-800">
-    Es {{ resultado.signo }}
-  </span>
-  
-  <div class="w-20 h-20 rounded-full bg-blue-600 p-2 flex items-center justify-center overflow-hidden shadow-sm">
-    <img
-      [src]="resultado.imagen"
-      [alt]="resultado.signo"
-      class="w-full h-full object-cover rounded-full"
-    >
-  </div>
-</div>
-
+        <ng-template #sinResultado>
+          <div class="text-gray-400 italic py-12 text-sm">
+            Ingresa tus datos y presiona "imprimir" para ver el resultado aquí.
+          </div>
+        </ng-template>
       </div>
 
     </div>
+  </div>
 
+
+  <!-- ================= VISTA 2: COMPONENTE DE LA TABLA (Registros) ================= -->
+  <div *ngIf="vistaActual === 'registros'">
+    <app-tabla-zodiaco 
+      [lista]="listaConsultas" 
+      (editar)="prepararEdicion($event)" 
+      (eliminar)="eliminarConsulta($event)">
+    </app-tabla-zodiaco>
   </div>
 
 </div>

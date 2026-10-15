@@ -1,0 +1,42 @@
+<div class="mt-8 bg-white border border-gray-300 p-6 rounded-lg shadow-sm">
+  <h3 class="text-xl font-bold text-gray-900 mb-4">Historial de Consultas Registradas</h3>
+  
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg" *ngIf="lista && lista.length > 0">
+    <table class="w-full text-sm text-left text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+        <tr>
+          <th class="px-4 py-3">Nombre Completo</th>
+          <th class="px-4 py-3">Edad</th>
+          <th class="px-4 py-3">Sexo</th>
+          <th class="px-4 py-3">Signo</th>
+          <th class="px-4 py-3">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of lista; let i = index" class="bg-white border-b hover:bg-gray-50">
+          <td class="px-4 py-3 font-medium text-gray-900">{{ item.nombreCompleto }}</td>
+          <td class="px-4 py-3">{{ item.edad }}</td>
+          <td class="px-4 py-3">{{ item.sexo }}</td>
+          <!-- Solo muestra el nombre del signo, sin la imagen -->
+          <td class="px-4 py-3 font-semibold text-gray-800">
+            {{ item.signo }}
+          </td>
+          <td class="px-4 py-3">
+            <div class="flex gap-2">
+              <button type="button" (click)="onEditar(i)" class="px-3 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700 font-medium cursor-pointer">
+                Editar
+              </button>
+              <button type="button" (click)="onEliminar(i)" class="px-3 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700 font-medium cursor-pointer">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!lista || lista.length === 0" class="p-6 text-center text-sm text-gray-600 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+    No hay consultas registradas en el almacenamiento.
+  </div>
+</div>
